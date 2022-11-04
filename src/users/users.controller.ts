@@ -4,8 +4,8 @@ import {UsersService} from "./users.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {User} from "./user.entity";
 import {JwtAuthGuard} from "../auth/guards/jwtAuth.guard";
-import {Roles} from "../auth/decorators/roles-auth.decorator";
-import {RolesGuard} from "../auth/guards/roles.guard";
+import {RolesGuard} from "../roles/guards/roles.guard";
+import {Roles} from "../roles/decorators/roles-auth.decorator";
 
 @ApiTags('Пользователи')
 @Controller('users')

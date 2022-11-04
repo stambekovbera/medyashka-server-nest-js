@@ -1,19 +1,7 @@
-import {
-    BelongsToMany,
-    Column,
-    DataType,
-    Model,
-    Table
-} from "sequelize-typescript";
-import {
-    ApiProperty
-} from "@nestjs/swagger";
-import {
-    Role
-} from "../roles/role.entity";
-import {
-    UserRole
-} from "../user-roles/user-role.entity";
+import {BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescript";
+import {ApiProperty} from "@nestjs/swagger";
+import {Role} from "../roles/role.entity";
+import {UserRole} from "../user-roles/user-role.entity";
 
 interface UserCreateAttributes {
     email: string;
@@ -32,6 +20,10 @@ export class User extends Model<User, UserCreateAttributes> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     email: string;
 
+    @ApiProperty({example: "example", description: "Логин"})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    login: string;
+
     @ApiProperty({example: "example-password", description: "Пароль"})
     @Column({type: DataType.STRING, allowNull: false})
     password: string;
@@ -43,6 +35,10 @@ export class User extends Model<User, UserCreateAttributes> {
     @ApiProperty({example: "0000", description: "Код подтверждения"})
     @Column({type: DataType.INTEGER, allowNull: true})
     verification_code: number;
+
+    @ApiProperty({example: "link", description: "Ссылка на подтверждение почтового адреса"})
+    @Column({type: DataType.STRING, allowNull: true})
+    email_confirmation_link: string;
 
     @ApiProperty({example: "true", description: "Подтверждение ли почтовый адрес"})
     @Column({type: DataType.BOOLEAN, defaultValue: false})

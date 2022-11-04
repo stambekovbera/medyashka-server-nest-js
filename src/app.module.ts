@@ -7,6 +7,7 @@ import {RolesModule} from './roles/roles.module';
 import {Role} from "./roles/role.entity";
 import {UserRolesModule} from './user-roles/user-roles.module';
 import {UserRole} from "./user-roles/user-role.entity";
+import {AuthModule} from './auth/auth.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import {UserRole} from "./user-roles/user-role.entity";
             models: [User, Role, UserRole],
             autoLoadModels: true,
         }),
+        AuthModule,
         UsersModule,
         RolesModule,
         UserRolesModule,

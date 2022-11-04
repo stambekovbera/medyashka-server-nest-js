@@ -1,4 +1,5 @@
 import {
+    BelongsToMany,
     Column,
     DataType,
     Model,
@@ -7,6 +8,12 @@ import {
 import {
     ApiProperty
 } from "@nestjs/swagger";
+import {
+    Role
+} from "../roles/role.entity";
+import {
+    UserRole
+} from "../user-roles/user-role.entity";
 
 interface UserCreateAttributes {
     email: string;
@@ -48,4 +55,7 @@ export class User extends Model<User, UserCreateAttributes> {
     @ApiProperty({example: "true", description: "Деактивирован ли пользователь"})
     @Column({type: DataType.BOOLEAN, defaultValue: true})
     active: boolean;
+
+    @BelongsToMany(() => Role, () => UserRole)
+    roles: Role[];
 }

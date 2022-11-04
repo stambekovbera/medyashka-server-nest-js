@@ -11,4 +11,7 @@ export class CreateUserDto {
 
     @ApiProperty({example: "Иванов Иван Иванович", description: "ФИО"})
     readonly full_name: string;
+
+    @ApiProperty({example: "user", description: "Роль"})
+    readonly role: string;
 }

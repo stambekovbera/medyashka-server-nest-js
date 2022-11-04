@@ -1,6 +1,6 @@
 import {
     Body,
-    Controller,
+    Controller, Get,
     Post
 } from '@nestjs/common';
 import {
@@ -31,5 +31,12 @@ export class UsersController {
     @Post()
     create(@Body() userDto: CreateUserDto) {
         return this.usersService.createUser(userDto);
+    }
+
+    @ApiOperation({summary: "Получение всех пользователей"})
+    @ApiResponse({status: 200, type: [User]})
+    @Get()
+    getAllUsers() {
+        return this.usersService.getAllUsers();
     }
 }

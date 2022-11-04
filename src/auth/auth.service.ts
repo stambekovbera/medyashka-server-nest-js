@@ -1,4 +1,4 @@
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, UnauthorizedException} from '@nestjs/common';
 import {LoginDto} from "./dto/login.dto";
 import {CreateUserDto} from "../users/dto/create-user.dto";
 import {UsersService} from "../users/users.service";
@@ -15,8 +15,10 @@ export class AuthService {
     ) {
     }
 
-
     async login(dto: LoginDto) {
+        const user = await this.validateUser(dto);
+
+        return this.generateToken(user);
     }
 
     async registration(dto: CreateUserDto) {
@@ -50,10 +52,10 @@ export class AuthService {
         const hashPassword = await bcrypt.hash(dto.password, 5);
         const user = await this.userService.createUser({...dto, password: hashPassword});
 
-        await this.generateToken(user);
+        return this.generateToken(user);
     }
 
-    async generateToken(user: User) {
+    private async generateToken(user: User) {
         const payload = {
             id: user.id,
             email: user.email,
@@ -62,10 +64,54 @@ export class AuthService {
             active: user.active,
             email_confirmed: user.email_confirmed,
             banned: user.banned,
+            roles: [...user.roles.map(role => role.value)],
         };
 
         return {
             token: this.jwtService.sign(payload),
         };
+    }
+
+    private async validateUser(dto: LoginDto) {
+        const {
+            email,
+            login,
+            password
+        } = dto;
+
+        if (!email && !login) {
+            throw new UnauthorizedException({message: 'Введите почтовый адрес или логин'});
+        }
+
+        if (!password) {
+            throw new UnauthorizedException({message: 'Введите пароль'});
+        }
+
+        let user: User;
+
+        if (email) {
+            user = await this.userService.getUserByEmail(email);
+
+            if (!user) {
+                throw new UnauthorizedException({message: "Пользователь с таким почтовым адресом не найден"});
+            }
+        }
+
+        if (login) {
+            user = await this.userService.getUserByLogin(login);
+
+            if (!user) {
+                throw new UnauthorizedException({message: "Пользователь с таким логином не найден"});
+            }
+        }
+
+        if (Object.keys(user).length > 0) {
+            const passwordEquals = await bcrypt.compare(password, user.password);
+            if (!passwordEquals) {
+                throw new UnauthorizedException({message: "Введен неправильный пароль"});
+            }
+
+            return user;
+        }
     }
 }

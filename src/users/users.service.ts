@@ -16,7 +16,6 @@ export class UsersService {
 
 
     async createUser(dto: CreateUserDto) {
-
         if (!dto.email) {
             throw new HttpException("Не указан почтовый адрес", HttpStatus.BAD_REQUEST);
         }
@@ -35,6 +34,7 @@ export class UsersService {
         const user = await this.userRepository.create(dto);
         const role = await this.roleRepository.getRoleByValue(defaultRole);
         await user.$set('roles', [role.id]);
+        user.roles = [role];
 
         return user;
     }

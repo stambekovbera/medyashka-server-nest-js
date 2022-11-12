@@ -8,6 +8,7 @@ import {Role} from "./roles/role.entity";
 import {UserRolesModule} from './user-roles/user-roles.module';
 import {UserRole} from "./user-roles/user-role.entity";
 import {AuthModule} from './auth/auth.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import {AuthModule} from './auth/auth.module';
         UsersModule,
         RolesModule,
         UserRolesModule,
+        ImagesModule,
     ],
 })
 

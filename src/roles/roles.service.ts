@@ -30,16 +30,16 @@ export class RolesService {
 			throw new HttpException("Роль уже существует", HttpStatus.BAD_REQUEST);
 		}
 
-		return await this.roleRepository.create(dto);
+		return await this.roleRepository.create({ ...dto, value: dto.value.toLowerCase() });
 	}
 
 	async getRoleByValue(value: string) {
-		const role = this.roleRepository.findOne({ where: { value } })
+		const role = await this.roleRepository.findOne({ where: { value } });
 		return role;
 	}
 
 	async getAllRoles() {
-		const roles = this.roleRepository.findAll();
+		const roles = await this.roleRepository.findAll();
 		return roles;
 	}
 }

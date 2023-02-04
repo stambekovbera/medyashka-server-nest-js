@@ -30,9 +30,13 @@ export class UsersService {
 		}
 
 		const defaultRole = dto?.role || "user";
+		const role = await this.roleRepository.getRoleByValue(defaultRole);
+
+		if (!role) {
+			throw new HttpException(`Роли '${ defaultRole.toUpperCase() }' не существует`, HttpStatus.BAD_REQUEST);
+		}
 
 		const user = await this.userRepository.create(dto);
-		const role = await this.roleRepository.getRoleByValue(defaultRole);
 		await user.$set('roles', [ role.id ]);
 		user.roles = [ role ];
 

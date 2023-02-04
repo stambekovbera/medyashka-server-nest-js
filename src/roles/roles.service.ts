@@ -1,28 +1,45 @@
-import {Injectable} from '@nestjs/common';
-import {InjectModel} from "@nestjs/sequelize";
-import {CreateRoleDto} from "./dto/create-role.dto";
-import {Role} from "./role.entity";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from "@nestjs/sequelize";
+import { CreateRoleDto } from "./dto/create-role.dto";
+import { Role } from "./role.entity";
 
 @Injectable()
 export class RolesService {
-    constructor(
-        @InjectModel(Role)
-        private roleRepository: typeof Role
-    ) {
-    }
+	constructor(
+		@InjectModel(Role)
+		private roleRepository: typeof Role
+	) {
+	}
 
-    async createRole(dto: CreateRoleDto) {
-        const role = await this.roleRepository.create(dto);
-        return role;
-    }
+	async createRole(dto: CreateRoleDto) {
+		const {
+			value,
+			description
+		} = dto;
 
-    async getRoleByValue(value: string) {
-        const role = this.roleRepository.findOne({where: {value}})
-        return role;
-    }
+		if (!value) {
+			throw new HttpException("Не указана роль", HttpStatus.BAD_REQUEST);
+		}
 
-    async getAllRoles() {
-        const roles = this.roleRepository.findAll();
-        return roles;
-    }
+		if (!description) {
+			throw new HttpException("Не указано описание роли", HttpStatus.BAD_REQUEST);
+		}
+		const candidateRole = await this.getRoleByValue(value.toLowerCase());
+
+		if (candidateRole) {
+			throw new HttpException("Роль уже существует", HttpStatus.BAD_REQUEST);
+		}
+
+		return await this.roleRepository.create(dto);
+	}
+
+	async getRoleByValue(value: string) {
+		const role = this.roleRepository.findOne({ where: { value } })
+		return role;
+	}
+
+	async getAllRoles() {
+		const roles = this.roleRepository.findAll();
+		return roles;
+	}
 }

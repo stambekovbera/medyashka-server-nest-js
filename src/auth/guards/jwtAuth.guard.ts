@@ -17,8 +17,7 @@ export class JwtAuthGuard implements CanActivate {
 		try {
 			const xAuthTokenJwtParser = ExtractJwt.fromHeader('x-auth-token');
 			const authorizationJwtParser = ExtractJwt.fromHeader('authorization');
-			const token =
-				xAuthTokenJwtParser(request) || authorizationJwtParser(request);
+			const token = xAuthTokenJwtParser(request) || authorizationJwtParser(request);
 
 			if (!token) {
 				throw new UnauthorizedException({ message: "Некорректный токен" });

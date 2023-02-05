@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/sequelize";
 import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { RolesService } from "../roles/roles.service";
+import { BanUserDto } from "./dto/ban-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -66,4 +67,16 @@ export class UsersService {
 		return user;
 	}
 
+	async banUser(dto: BanUserDto) {
+		const {
+			userId,
+			banReason
+		} = dto;
+
+		const user = this.userRepository.findByPk(userId);
+
+		if (!user) {
+			throw new HttpException(`Пользователь не найден`, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

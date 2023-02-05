@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UseGuards } from '@nestjs/common';
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -34,7 +34,8 @@ export class UsersService {
 		const role = await this.roleRepository.getRoleByValue(defaultRole);
 
 		if (!role) {
-			throw new HttpException(`Роли '${ defaultRole.toUpperCase() }' не существует`, HttpStatus.BAD_REQUEST);
+			const roles = this.roleRepository.getAllRoles();
+			throw new HttpException(`Роли '${ defaultRole.toUpperCase() }' не существует, выберите одну из ролей: '${ roles && await roles.then(res => res.map(role => role.value.toUpperCase()).join(', ')) }'`, HttpStatus.BAD_REQUEST);
 		}
 
 		const user = await this.userRepository.create(dto);

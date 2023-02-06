@@ -8,11 +8,20 @@ import { Role } from "./roles/role.entity";
 import { UserRolesModule } from './user-roles/user-roles.module';
 import { UserRole } from "./user-roles/user-role.entity";
 import { AuthModule } from './auth/auth.module';
+import { UsersAvatarsModule } from "./users-avatars/users-avatars.module";
+import { UserAvatar } from "./users-avatars/user-avatar.entity";
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from "@nestjs/serve-static";
+import * as path from 'path';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			envFilePath: `.${ process.env.NODE_ENV }.env`,
+		}),
+		ServeStaticModule.forRoot({
+			rootPath: path.resolve(__dirname, 'static', 'images'),
+			exclude: [ '/api*' ],
 		}),
 		SequelizeModule.forRoot({
 			dialect: 'postgres',
@@ -21,13 +30,15 @@ import { AuthModule } from './auth/auth.module';
 			username: process.env.POSTGRES_USER,
 			password: process.env.POSTGRES_PASSWORD,
 			database: process.env.POSTGRES_DB,
-			models: [ User, Role, UserRole ],
+			models: [ User, Role, UserRole, UserAvatar ],
 			autoLoadModels: true,
 		}),
 		AuthModule,
 		UsersModule,
 		RolesModule,
 		UserRolesModule,
+		UsersAvatarsModule,
+		FilesModule,
 	],
 })
 

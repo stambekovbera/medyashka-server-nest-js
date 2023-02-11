@@ -37,6 +37,23 @@
 
 Затем в ```.docker.env``` заполните данные ```* - обязательные поля```
 
+## Далее
+
+```bash
+$ make build
+$ make up
+```
+
+Откройте новый терминал и введите:
+```bash
+$ make psql-copy-books-dump
+$ pg_restore -U postgres -d medyashka --no-owner -1 /medyashka-books.sql
+```
+
+Вышеописанные действия нужны для импорта страниц книг в базу данных
+
+make команды можно посмотреть в файле Makefile
+
 ## Installation (без докера)
 
 Переименуйте файл:

@@ -54,7 +54,7 @@ make up
 make psql-copy-books-dump
 ```
 ```bash
-pg_restore -U postgres -d medyashka --no-owner -1 /medyashka-books.sql
+pg_restore -U postgres -d medyashka --clean --if-exists --no-owner -1 /medyashka-books.sql
 ```
 
 Вышеописанные действия нужны для импорта страниц книг в базу данных

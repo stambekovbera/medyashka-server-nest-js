@@ -2,7 +2,7 @@ version: '1.0'
 
 services:
   main:
-    container_name: main
+    container_name: medyashka-backend
     build:
       context: .
     env_file:

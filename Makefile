@@ -19,7 +19,7 @@ restart:
 	docker-compose stop && docker-compose up -d
 
 main-shell:
-	docker exec -it main bash
+	docker exec -it medyashka-backend bash
 
 psql-shell:
 	docker exec -it postgres bash

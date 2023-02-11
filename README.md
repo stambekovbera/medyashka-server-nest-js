@@ -27,6 +27,8 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Докер
+
 Переименуйте файл:
 
 ```
@@ -35,7 +37,17 @@
 
 Затем в ```.docker.env``` заполните данные ```* - обязательные поля```
 
-## Installation
+## Installation (без докера)
+
+Переименуйте файл:
+
+```
+.env.template --> .development.env
+```
+
+Затем в ```.development.env``` заполните данные ```* - обязательные поля```
+
+## Далее
 
 ```bash
 $ npm install

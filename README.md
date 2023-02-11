@@ -39,14 +39,21 @@
 
 ## Далее
 
+Запускаем контейнер
+
 ```bash
 $ make build
+```
+```bash
 $ make up
 ```
 
 Откройте новый терминал и введите:
+
 ```bash
 $ make psql-copy-books-dump
+```
+```bash
 $ pg_restore -U postgres -d medyashka --no-owner -1 /medyashka-books.sql
 ```
 

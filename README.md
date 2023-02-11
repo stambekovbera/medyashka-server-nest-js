@@ -42,19 +42,19 @@
 Запускаем контейнер
 
 ```bash
-$ make build
+make build
 ```
 ```bash
-$ make up
+make up
 ```
 
 Откройте новый терминал и введите:
 
 ```bash
-$ make psql-copy-books-dump
+make psql-copy-books-dump
 ```
 ```bash
-$ pg_restore -U postgres -d medyashka --no-owner -1 /medyashka-books.sql
+pg_restore -U postgres -d medyashka --no-owner -1 /medyashka-books.sql
 ```
 
 Вышеописанные действия нужны для импорта страниц книг в базу данных
@@ -76,27 +76,27 @@ make команды можно посмотреть в файле Makefile
 ```Нужно импортировать дамп в папке /dumps в базу данных через pgAdmin либо терминал!!!```
 
 ```bash
-$ npm install
+npm install
 ```
 
 ## Running the app
 
 ```bash
 # watch mode
-$ npm run start:dev
+npm run start:dev
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
 ## Support

@@ -1,5 +1,6 @@
 .production.env
 .development.env
+.docker.env
 
 # compiled output
 /dist

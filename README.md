@@ -30,10 +30,10 @@
 Переименуйте файл:
 
 ```
-.env.template --> .development.env
+.env.template --> .docker.env
 ```
 
-Затем в ```.development.env``` заполните данные ```* - обязательные поля```
+Затем в ```.docker.env``` заполните данные ```* - обязательные поля```
 
 ## Installation
 

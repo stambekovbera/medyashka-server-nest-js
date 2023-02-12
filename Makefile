@@ -1,7 +1,7 @@
 build:
 	docker-compose build
 up:
-	docker-compose up --build
+	docker-compose down && docker-compose up --build
 
 start:
 	docker-compose start

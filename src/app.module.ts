@@ -13,6 +13,10 @@ import { UserAvatar } from "./users-avatars/user-avatar.entity";
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from 'path';
+import { FirstBook } from "./books/first-books/first-book.entity";
+import { SecondBook } from "./books/second-books/second-book.entity";
+import { ThirdBook } from "./books/third-books/third-book.entity";
+import { FourthBook } from "./books/fourth-books/fourth-book.entity";
 
 @Module({
 	imports: [
@@ -30,7 +34,7 @@ import * as path from 'path';
 			username: process.env.POSTGRES_USER,
 			password: process.env.POSTGRES_PASSWORD,
 			database: process.env.POSTGRES_DB,
-			models: [ User, Role, UserRole, UserAvatar ],
+			models: [ User, Role, UserRole, UserAvatar, FirstBook, SecondBook, ThirdBook, FourthBook ],
 			autoLoadModels: true,
 		}),
 		AuthModule,
